@@ -1,0 +1,33 @@
+version: '3'
+services:
+  api-heroes-caching:
+    container_name: api-heroes-caching
+    build: .
+    ports:
+      - 3000:3000
+      - 4000:4000
+    environment:
+      POSTGRES_HOST: postgres:mysecretpassword@postgres:5432
+      
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    # volumes:
+    #   - .:/src
+    #   - nodemodules:/src/node_modules
+    
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: heroes
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      
+volumes:
+  db-data: {}

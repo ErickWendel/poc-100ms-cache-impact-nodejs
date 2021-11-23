@@ -1,0 +1,28 @@
+{
+  "name": "poc-100ms-cache",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "seed-and-servers": "concurrently \"npm run seed\" \"npm run cached\" \"npm run nocache\"",
+    "nocache": "node src/index-nocache.js",
+    "cached": "node src/index-cached.js",
+    "seed": "node src/seeder.js",
+    "loadtest:cached": "npx autocannon -c 100 -d 10 localhost:3000 --renderStatusCodes",
+    "loadtest:nocache": "npx autocannon -c 100 -d 10 localhost:4000 --renderStatusCodes"
+  },
+  "keywords": [],
+  "author": "erickwendel",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.4.0",
+    "faker": "^5.5.3",
+    "node-cache": "^5.1.2",
+    "pg": "^8.7.1",
+    "sequelize": "^6.12.0-alpha.1"
+  },
+  "devDependencies": {
+    "autocannon": "^7.5.0"
+  }
+}
